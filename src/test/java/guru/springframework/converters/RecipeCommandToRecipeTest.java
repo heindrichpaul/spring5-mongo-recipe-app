@@ -9,8 +9,7 @@ import guru.springframework.domain.Recipe;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class RecipeCommandToRecipeTest {
     public static final String RECIPE_ID = "1";
