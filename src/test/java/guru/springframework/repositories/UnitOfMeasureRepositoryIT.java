@@ -11,11 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
 
-/**
- * Created by jt on 6/17/17.
- */
 @Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
