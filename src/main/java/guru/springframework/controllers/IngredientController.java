@@ -31,8 +31,8 @@ public class IngredientController {
         this.unitOfMeasureService = unitOfMeasureService;
     }
 
-    @InitBinder
-    public void initBind(WebDataBinder webDataBinder){
+    @InitBinder("ingredient")
+    public void initBinder(WebDataBinder webDataBinder){
         this.webDataBinder=webDataBinder;
     }
 
@@ -75,14 +75,14 @@ public class IngredientController {
     @GetMapping("recipe/{recipeId}/ingredient/{id}/update")
     public String updateRecipeIngredient(@PathVariable String recipeId,
                                          @PathVariable String id, Model model) {
-        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id).block());
+        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id));
 
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return RECIPE_INGREDIENT_INGREDIENTFORM;
     }
 
     @PostMapping("recipe/{recipeId}/ingredient")
-    public String saveOrUpdate(@ModelAttribute IngredientCommand command) {
+    public String saveOrUpdate(@ModelAttribute("ingredient") IngredientCommand command, @PathVariable String recipeId, Model model) {
         webDataBinder.validate();
         BindingResult bindingResult = webDataBinder.getBindingResult();
 
@@ -92,14 +92,15 @@ public class IngredientController {
                 log.debug(objectError.toString());
             });
 
-            return "recipe/" + command.getRecipeId() + "/ingredient/" + command.getId() + "/update";
+            model.addAttribute("uomList",unitOfMeasureService.listAllUoms());
+            return RECIPE_INGREDIENT_INGREDIENTFORM;
         }
 
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command).block();
 
         log.debug("saved ingredient id:" + savedCommand.getId());
 
-        return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+        return "redirect:/recipe/" + recipeId + "/ingredient/" + savedCommand.getId() + "/show";
     }
 
     @GetMapping("recipe/{recipeId}/ingredient/{id}/delete")
