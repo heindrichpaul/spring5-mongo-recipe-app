@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>3.3.7-1</version>
+			<version>3.4.1</version>
 		</dependency>
 
 		<dependency>
@@ -99,7 +99,7 @@
 						<format>html</format>
 						<format>xml</format>
 					</formats>
-					<check />
+					<check/>
 				</configuration>
 			</plugin>
 		</plugins>
